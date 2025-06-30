@@ -5,5 +5,5 @@ import kotlinx.coroutines.flow.StateFlow
 
 interface HomeViewModel {
     val uiState: StateFlow<HomeUIState>
-    fun setTest(test: String)
+    fun updateNameTheme(value: String)
 }

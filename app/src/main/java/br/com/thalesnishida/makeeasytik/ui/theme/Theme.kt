@@ -39,7 +39,7 @@ val CustomShape = Shapes(
 )
 
 @Composable
-fun MakeEasyTik(
+fun MakeEasyTikAppTheme(
     content: @Composable () -> Unit
 ) {
     MaterialTheme(

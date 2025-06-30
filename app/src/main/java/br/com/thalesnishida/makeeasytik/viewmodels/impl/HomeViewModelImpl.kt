@@ -10,6 +10,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
+import kotlinx.coroutines.flow.update
 import javax.inject.Inject
 
 @HiltViewModel
@@ -20,9 +21,11 @@ class HomeViewModelImpl @Inject constructor(
     private val _uiState: MutableStateFlow<HomeUIState> = MutableStateFlow(HomeUIState())
     override val uiState: StateFlow<HomeUIState> get() = _uiState
 
-    override fun setTest(test: String) {
-        cacheService.setTest(test)
-        Toast.makeText(context, "Test set to: $test", Toast.LENGTH_SHORT).show()
+    override fun updateNameTheme(value: String) {
+        _uiState.update {
+            it.copy(
+                nameTheme = value
+            )
+        }
     }
-
 }
