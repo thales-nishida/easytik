@@ -1,10 +1,13 @@
 package br.com.thalesnishida.makeeasytik.ui.screens
 
-import androidx.compose.foundation.layout.Arrangement
+import android.annotation.SuppressLint
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.rememberScrollState
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -20,6 +23,7 @@ import br.com.thalesnishida.makeeasytik.composables.OutlinedTextFieldDefault
 import br.com.thalesnishida.makeeasytik.viewmodels.HomeViewModel
 import br.com.thalesnishida.makeeasytik.viewmodels.mock.HomeViewModelMock
 
+@SuppressLint("StateFlowValueCalledInComposition")
 @Composable
 fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
     val uiState by viewModel.uiState.collectAsState()
@@ -27,9 +31,7 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
         modifier = Modifier
             .fillMaxSize()
             .padding(16.dp),
-        verticalArrangement = Arrangement.SpaceAround
     ) {
-
         OutlinedTextFieldDefault(
             value = uiState.nameTheme,
             onValueChange = { viewModel.updateNameTheme(it) },
@@ -39,10 +41,17 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
 
         ButtonDefault(
             onClick = {
+                viewModel.sendTheme(uiState.nameTheme)
             },
             modifier = Modifier.fillMaxWidth(),
         ) {
             Text("Gerar")
+        }
+
+        Box(modifier = Modifier
+            .weight(1f)
+            .verticalScroll(rememberScrollState())) {
+            Text(text = viewModel.uiState.value.textGenerated)
         }
     }
 }

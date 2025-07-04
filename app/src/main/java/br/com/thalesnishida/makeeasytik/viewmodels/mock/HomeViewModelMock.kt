@@ -10,6 +10,7 @@ class HomeViewModelMock : ViewModel(), HomeViewModel {
     private val _uiSate: MutableStateFlow<HomeUIState> = MutableStateFlow(HomeUIState())
     override val uiState: StateFlow<HomeUIState> get() = _uiSate
 
-    override fun updateNameTheme(value: String) {
-    }
+    override fun updateNameTheme(value: String) {}
+
+    override fun sendTheme(theme: String) {}
 }
