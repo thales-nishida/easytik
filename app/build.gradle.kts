@@ -1,3 +1,5 @@
+import org.jetbrains.kotlin.gradle.utils.loadPropertyFromResources
+
 plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
@@ -13,6 +15,11 @@ android {
     namespace = "br.com.thalesnishida.makeeasytik"
     compileSdk = 35
 
+    buildFeatures {
+        buildConfig = true
+    }
+
+
     defaultConfig {
         applicationId = "br.com.thalesnishida.makeeasytik"
         minSdk = 21
@@ -25,6 +32,7 @@ android {
 
     buildTypes {
         debug {
+            buildConfigField("String", "API_KEY", "\"${property("API_KEY")}\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -32,6 +40,7 @@ android {
             )
         }
         release {
+            buildConfigField("String", "API_KEY", "\"${property("API_KEY")}\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

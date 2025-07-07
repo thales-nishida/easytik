@@ -21,7 +21,7 @@ import androidx.navigation.compose.rememberNavController
 import br.com.thalesnishida.makeeasytik.composables.ButtonDefault
 import br.com.thalesnishida.makeeasytik.composables.OutlinedTextFieldDefault
 import br.com.thalesnishida.makeeasytik.viewmodels.HomeViewModel
-import br.com.thalesnishida.makeeasytik.viewmodels.mock.HomeViewModelMock
+import br.com.thalesnishida.makeeasytik.viewmodels.HomeViewModelMock
 
 @SuppressLint("StateFlowValueCalledInComposition")
 @Composable

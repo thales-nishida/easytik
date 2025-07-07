@@ -6,7 +6,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.compose.composable
 import br.com.thalesnishida.makeeasytik.extentions.navigateTo
 import br.com.thalesnishida.makeeasytik.ui.screens.HomeScreen
-import br.com.thalesnishida.makeeasytik.viewmodels.impl.HomeViewModelImpl
+import br.com.thalesnishida.makeeasytik.viewmodels.HomeViewModelImpl
 
 
 fun NavGraphBuilder.homeScreen(navController: NavController) {

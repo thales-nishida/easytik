@@ -1,5 +1,6 @@
 package br.com.thalesnishida.makeeasytik.services.impl
 
+import br.com.thalesnishida.makeeasytik.BuildConfig
 import br.com.thalesnishida.makeeasytik.model.GeminiResponse
 import br.com.thalesnishida.makeeasytik.services.GeminiService
 import com.google.gson.Gson
@@ -37,7 +38,7 @@ class GeminiServiceImpl @Inject constructor(
                 ---
                     **TAREFA FINAL IMPORTANTE:** Após gerar o roteiro completo com todas as formatações acima, reescreva ABAIXO dele uma versão final contendo APENAS as falas a serem narradas. Remova todas as indicações de tempo, sugestões de entonação e títulos de seção. Este texto final deve estar perfeitamente limpo e pronto para ser enviado a uma API de Text-to-Speech (TTS).
         """.trimIndent()
-        val key = "AIzaSyCjlJQe5gL4MqdrYB3fmNXvzBWjvItJe0w"
+        val key = BuildConfig.API_KEY
 
         val url =
             "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$key"
@@ -65,7 +66,9 @@ class GeminiServiceImpl @Inject constructor(
         response.use {
             if (it.isSuccessful) {
                 val geminiResponse = gson.fromJson(it.body.string(), GeminiResponse::class.java)
-                return@withContext geminiResponse.candidates[0].content.parts[0].text
+                val completeString = geminiResponse.candidates[0].content.parts[0].text
+                val justTalkString = completeString.substringAfter("**Versão Final (Apenas Falas):**")
+                return@withContext justTalkString
             } else {
                 throw IOException("Erro: ${response.code} - ${response.body.string()}")
             }
