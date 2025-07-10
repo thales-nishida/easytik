@@ -67,7 +67,7 @@ class GeminiServiceImpl @Inject constructor(
             if (it.isSuccessful) {
                 val geminiResponse = gson.fromJson(it.body.string(), GeminiResponse::class.java)
                 val completeString = geminiResponse.candidates[0].content.parts[0].text
-                val justTalkString = completeString.substringAfter("**Versão Final (Apenas Falas):**")
+                val justTalkString = completeString.substringAfterLast("**").trim()
                 return@withContext justTalkString
             } else {
                 throw IOException("Erro: ${response.code} - ${response.body.string()}")

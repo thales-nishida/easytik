@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
@@ -51,7 +52,11 @@ fun HomeScreen(navController: NavController, viewModel: HomeViewModel) {
         Box(modifier = Modifier
             .weight(1f)
             .verticalScroll(rememberScrollState())) {
-            Text(text = viewModel.uiState.value.textGenerated)
+            if(uiState.isLoading) {
+                CircularProgressIndicator()
+            } else {
+                Text(text = viewModel.uiState.value.textGenerated)
+            }
         }
     }
 }

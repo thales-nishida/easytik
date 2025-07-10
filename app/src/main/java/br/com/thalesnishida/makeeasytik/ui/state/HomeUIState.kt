@@ -5,5 +5,6 @@ import br.com.thalesnishida.makeeasytik.utils.StringUtils
 data class HomeUIState(
     val nameTheme: String = StringUtils.EMPTY,
     val showNameThemeError: Boolean = false,
-    val textGenerated: String = StringUtils.EMPTY
+    val textGenerated: String = StringUtils.EMPTY,
+    val isLoading: Boolean = false
 )

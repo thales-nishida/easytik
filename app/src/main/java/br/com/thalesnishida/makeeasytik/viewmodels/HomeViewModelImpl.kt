@@ -34,17 +34,24 @@ class HomeViewModelImpl @Inject constructor(
 
     override fun sendTheme(theme: String) {
         viewModelScope.launch(Dispatchers.IO) {
-            val results = geminiService.sendTheme(
-                theme = theme,
-                niche = "mistério",
-                tone = "casos de poilica"
-            )
-
-
-            _uiState.update {
-                it.copy(
-                    textGenerated = results
+            try {
+                _uiState.update { it.copy(isLoading = true) }
+                val results = geminiService.sendTheme(
+                    theme = theme,
+                    niche = "mistério",
+                    tone = "casos de poilica"
                 )
+
+                _uiState.update {
+                    it.copy(
+                        textGenerated = results
+                    )
+                }
+            }catch (e: Exception) {
+                //TODO(create a dialog for exibe the error)
+                e.printStackTrace()
+            }finally {
+                _uiState.update { it.copy(isLoading = false) }
             }
         }
     }
