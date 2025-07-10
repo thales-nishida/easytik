@@ -1,8 +1,7 @@
-package br.com.thalesnishida.makeeasytik.services.impl
+package br.com.thalesnishida.makeeasytik.services
 
 import br.com.thalesnishida.makeeasytik.BuildConfig
 import br.com.thalesnishida.makeeasytik.model.GeminiResponse
-import br.com.thalesnishida.makeeasytik.services.GeminiService
 import com.google.gson.Gson
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext

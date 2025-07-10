@@ -33,6 +33,7 @@ android {
     buildTypes {
         debug {
             buildConfigField("String", "API_KEY", "\"${property("API_KEY")}\"")
+            buildConfigField("String", "XI_API_KEY", "\"${property("XI_API_KEY")}\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
@@ -41,6 +42,7 @@ android {
         }
         release {
             buildConfigField("String", "API_KEY", "\"${property("API_KEY")}\"")
+            buildConfigField("String", "XI_API_KEY", "\"${property("XI_API_KEY")}\"")
             isMinifyEnabled = false
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),

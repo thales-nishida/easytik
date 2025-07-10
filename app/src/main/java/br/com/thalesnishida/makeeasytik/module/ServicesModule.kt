@@ -1,10 +1,14 @@
 package br.com.thalesnishida.makeeasytik.module
 
 import android.content.Context
+import br.com.thalesnishida.makeeasytik.services.AudioPlayService
+import br.com.thalesnishida.makeeasytik.services.AudioPlayServiceImpl
 import br.com.thalesnishida.makeeasytik.services.CacheService
+import br.com.thalesnishida.makeeasytik.services.CacheServiceImpl
+import br.com.thalesnishida.makeeasytik.services.ElevenLabsService
+import br.com.thalesnishida.makeeasytik.services.ElevenLabsServiceImpl
 import br.com.thalesnishida.makeeasytik.services.GeminiService
-import br.com.thalesnishida.makeeasytik.services.impl.CacheServiceImpl
-import br.com.thalesnishida.makeeasytik.services.impl.GeminiServiceImpl
+import br.com.thalesnishida.makeeasytik.services.GeminiServiceImpl
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
@@ -43,5 +47,25 @@ class ServicesModule {
             gson = gson,
             okHttpClient = okHttpClient
         )
+    }
+
+    @Provides
+    fun provideElevenLabsService(
+        okHttpClient: OkHttpClient,
+        gson: Gson,
+        cacheService: CacheService,
+    ): ElevenLabsService {
+        return ElevenLabsServiceImpl(
+            gson = gson,
+            okHttpClient = okHttpClient,
+            cacheService = cacheService
+        )
+    }
+
+    @Provides
+    fun provideAudioPlayService(
+        cacheService: CacheService
+    ) : AudioPlayService {
+        return AudioPlayServiceImpl(cacheService)
     }
 }

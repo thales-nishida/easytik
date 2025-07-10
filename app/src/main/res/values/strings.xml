@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">Easytik</string>
+    <string name="error_to_create_audio">Error to create audio.</string>
+    <string name="audio_file_not_found">Audio file not found.</string>
 </resources>
