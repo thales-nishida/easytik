@@ -9,6 +9,7 @@ abstract class Route {
         when(this) {
             Home -> navController.navigateToHomeScreen()
             Settings -> navController.navigateToSettingsScreen()
+            Login -> navController.navigateToLoginScreen()
             else -> None
         }
     }
@@ -23,3 +24,5 @@ data object Home: Route()
 @Serializable
 data object Settings: Route()
 
+@Serializable
+data object Login: Route()

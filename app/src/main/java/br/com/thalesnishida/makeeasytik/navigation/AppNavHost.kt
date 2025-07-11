@@ -8,8 +8,9 @@ import androidx.navigation.compose.NavHost
 fun AppNavHost(
     navController: NavHostController
 ) {
-    NavHost(navController = navController, startDestination = Home) {
+    NavHost(navController = navController, startDestination = Login) {
         homeScreen(navController)
         settingsScreen(navController)
+        loginScreen(navController)
     }
 }

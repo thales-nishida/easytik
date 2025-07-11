@@ -2,11 +2,13 @@ package br.com.thalesnishida.makeeasytik.extentions
 
 import android.content.Context
 import android.content.IntentFilter
-import android.media.MediaPlayer
 import android.net.ConnectivityManager
+import androidx.datastore.core.DataStore
+import androidx.datastore.preferences.core.Preferences
+import androidx.datastore.preferences.preferencesDataStore
 import br.com.thalesnishida.makeeasytik.receivers.MobileDataReceiver
-import java.io.File
-import java.io.FileOutputStream
+
+val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "login")
 
 @Suppress("DEPRECATION")
 fun Context.registerDataReceiver() {
