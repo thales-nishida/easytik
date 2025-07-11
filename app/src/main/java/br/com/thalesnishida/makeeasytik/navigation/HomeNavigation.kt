@@ -8,7 +8,6 @@ import br.com.thalesnishida.makeeasytik.extentions.navigateTo
 import br.com.thalesnishida.makeeasytik.ui.screens.HomeScreen
 import br.com.thalesnishida.makeeasytik.viewmodels.HomeViewModelImpl
 
-
 fun NavGraphBuilder.homeScreen(navController: NavController) {
     composable<Home> {
         HomeScreen(navController, hiltViewModel<HomeViewModelImpl>())

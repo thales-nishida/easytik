@@ -52,12 +52,19 @@ class HomeViewModelImpl @Inject constructor(
                     tone = "casos de poilica"
                 )
 
-                _uiState.update {
-                    it.copy(
-                        textGenerated = results
-                    )
+                if (results != "key empty") {
+                    _uiState.update {
+                        it.copy(
+                            textGenerated = results,
+                            enableButton = true
+                        )
+                    }
+                    _toastMessage.emit("Texto gerado com sucesso")
+                } else {
+                    _toastMessage.emit("Key do gemini vazia!")
+                    return@launch
                 }
-                _toastMessage.emit("Texto gerado com sucesso")
+
             } catch (e: Exception) {
                 //TODO(create a dialog for exibe the error)
                 e.printStackTrace()
@@ -65,7 +72,6 @@ class HomeViewModelImpl @Inject constructor(
                 _uiState.update {
                     it.copy(
                         isLoading = false,
-                        enableButton = true
                     )
                 }
             }

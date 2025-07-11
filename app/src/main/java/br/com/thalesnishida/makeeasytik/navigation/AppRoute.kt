@@ -8,6 +8,7 @@ abstract class Route {
     fun navigate(navController: NavController) {
         when(this) {
             Home -> navController.navigateToHomeScreen()
+            Settings -> navController.navigateToSettingsScreen()
             else -> None
         }
     }
@@ -18,4 +19,7 @@ data object None: Route()
 
 @Serializable
 data object Home: Route()
+
+@Serializable
+data object Settings: Route()
 

@@ -1,13 +1,16 @@
 package br.com.thalesnishida.makeeasytik.services
 
 import android.content.Context
+import br.com.thalesnishida.makeeasytik.model.Keys
+import com.google.gson.Gson
 import dagger.hilt.android.qualifiers.ApplicationContext
 import java.io.File
 import java.io.FileOutputStream
 import javax.inject.Inject
 
 class CacheServiceImpl @Inject constructor(
-    @ApplicationContext private val context: Context
+    @ApplicationContext private val context: Context,
+    private val gson: Gson
 ) : CacheService {
     override fun saveAudioBytes(audio: ByteArray, theme: String) {
         val editTheme = theme.lowercase().trim()
@@ -50,8 +53,26 @@ class CacheServiceImpl @Inject constructor(
         }
     }
 
+    override fun setApiKeys(key: Keys) {
+        val contentGson = gson.toJson(key)
+        val sharedPref = context.getSharedPreferences(CACHE, Context.MODE_PRIVATE)
+        with(sharedPref.edit()) {
+            putString(KEYS, contentGson)
+            apply()
+        }
+    }
+
+    override fun getApiKeys(): Keys? {
+        val sharedPref = context.getSharedPreferences(CACHE, Context.MODE_PRIVATE)
+        val keysLabelJson = sharedPref.getString(KEYS, null)
+        if (keysLabelJson != null) {
+            return gson.fromJson(keysLabelJson, Keys::class.java)
+        }
+        return null
+    }
+
     companion object {
         const val CACHE = "cache"
-        const val TEST = "test"
+        const val KEYS = "keys"
     }
 }

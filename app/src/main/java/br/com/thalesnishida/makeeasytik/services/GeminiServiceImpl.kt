@@ -1,8 +1,10 @@
 package br.com.thalesnishida.makeeasytik.services
 
-import br.com.thalesnishida.makeeasytik.BuildConfig
+import android.content.Context
+import android.widget.Toast
 import br.com.thalesnishida.makeeasytik.model.GeminiResponse
 import com.google.gson.Gson
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import okhttp3.MediaType.Companion.toMediaType
@@ -13,14 +15,22 @@ import okio.IOException
 import javax.inject.Inject
 
 class GeminiServiceImpl @Inject constructor(
+    @ApplicationContext private val context: Context,
     private val gson: Gson,
-    private val okHttpClient: OkHttpClient
+    private val okHttpClient: OkHttpClient,
+    private val cacheService: CacheService,
 ) : GeminiService {
     override suspend fun sendTheme(
         theme: String,
         niche: String,
         tone: String
     ): String = withContext(Dispatchers.IO) {
+        val key = cacheService.getApiKeys()?.keyGemini
+
+        if (key.isNullOrBlank()) {
+            return@withContext "key empty"
+        }
+
         val masterPrompt = """
                 Atue como: Um roteirista especialista em conteúdo viral para o TikTok, com foco em criar narrativas de falas que maximizem a retenção e o engajamento da audiência.
                 Seu objetivo: Criar um roteiro de falas para um vídeo de 70 segundos sobre o tema "$theme".
@@ -37,7 +47,6 @@ class GeminiServiceImpl @Inject constructor(
                 ---
                     **TAREFA FINAL IMPORTANTE:** Após gerar o roteiro completo com todas as formatações acima, reescreva ABAIXO dele uma versão final contendo APENAS as falas a serem narradas. Remova todas as indicações de tempo, sugestões de entonação e títulos de seção. Este texto final deve estar perfeitamente limpo e pronto para ser enviado a uma API de Text-to-Speech (TTS).
         """.trimIndent()
-        val key = BuildConfig.API_KEY
 
         val url =
             "https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=$key"

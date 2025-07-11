@@ -10,5 +10,6 @@ fun AppNavHost(
 ) {
     NavHost(navController = navController, startDestination = Home) {
         homeScreen(navController)
+        settingsScreen(navController)
     }
 }

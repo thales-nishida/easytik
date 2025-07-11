@@ -23,8 +23,11 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class ServicesModule {
     @Provides
-    fun provideCacheService(@ApplicationContext context: Context): CacheService {
-        return CacheServiceImpl(context)
+    fun provideCacheService(
+        @ApplicationContext context: Context,
+        gson: Gson
+    ): CacheService {
+        return CacheServiceImpl(context, gson)
     }
 
 
@@ -40,17 +43,22 @@ class ServicesModule {
 
     @Provides
     fun provideGeminiService(
+        @ApplicationContext context: Context,
         gson: Gson,
-        okHttpClient: OkHttpClient
+        okHttpClient: OkHttpClient,
+        cacheService: CacheService,
     ): GeminiService {
         return GeminiServiceImpl(
+            context = context,
+            okHttpClient = okHttpClient,
             gson = gson,
-            okHttpClient = okHttpClient
+            cacheService = cacheService
         )
     }
 
     @Provides
     fun provideElevenLabsService(
+        @ApplicationContext context: Context,
         okHttpClient: OkHttpClient,
         gson: Gson,
         cacheService: CacheService,
@@ -58,14 +66,15 @@ class ServicesModule {
         return ElevenLabsServiceImpl(
             gson = gson,
             okHttpClient = okHttpClient,
-            cacheService = cacheService
+            cacheService = cacheService,
+            context = context
         )
     }
 
     @Provides
     fun provideAudioPlayService(
         cacheService: CacheService
-    ) : AudioPlayService {
+    ): AudioPlayService {
         return AudioPlayServiceImpl(cacheService)
     }
 }
